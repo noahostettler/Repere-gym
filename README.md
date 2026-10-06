@@ -26,7 +26,7 @@ Le cache de l’application est prévu pour une utilisation hors connexion aprè
 
 ## Modifications futures
 
-Modifier les fichiers du dépôt puis publier sur la même branche. Après un changement des ressources mises en cache, augmenter la version `v2-nutrition` du cache dans `sw.js` pour renouveler les fichiers hors connexion.
+Modifier les fichiers du dépôt puis publier sur la même branche. Après un changement des ressources mises en cache, augmenter la version `v3-search-cache` du cache dans `sw.js` pour renouveler les fichiers hors connexion.
 
 ## Nutrition
 
@@ -52,3 +52,9 @@ Les interfaces de recherche restent séparées et les fiches gardent leur origin
 3. Enregistrer directement sur la branche main et attendre la fin du déploiement Pages.
 4. Ouvrir le site, recharger, puis le fermer et le rouvrir si l’ancienne version était encore ouverte. Le cache hors connexion porte une nouvelle version pour remplacer les anciens fichiers.
 5. Le nouvel onglet Nutrition apparaît. Les données locales restent sous la clé `repere.v1`.
+
+## Recherches de marques et connexion
+
+Les 20 dernières recherches réussies (12 produits au plus par recherche) sont conservées sur cet appareil : réutilisation pendant 24 heures, puis tentative de mise à jour. En cas de panne, les anciens résultats restent utilisables jusqu’à 30 jours, avec leur date affichée. Ce cache est séparé du journal et n’est pas inclus dans la sauvegarde JSON ; les aliments ajoutés au journal ou aux favoris le sont toujours. Une recherche sans résultat n’est pas mémorisée. Vérifier l’étiquette du produit.
+
+Les erreurs de réseau affichent une explication en français. Le cache réduit la dépendance au service, mais ne garantit pas la réussite d’une nouvelle recherche lorsque Open Food Facts est inaccessible. Pour Barilla, chercher « Barilla » dans Produits de marque, choisir le produit exact ou saisir le code-barres du paquet. Utiliser le poids avant cuisson pour les fiches de pâtes sèches.
