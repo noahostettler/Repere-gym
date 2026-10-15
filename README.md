@@ -26,7 +26,7 @@ Le cache de l’application est prévu pour une utilisation hors connexion aprè
 
 ## Modifications futures
 
-Modifier les fichiers du dépôt puis publier sur la même branche. Après un changement des ressources mises en cache, augmenter la version `v3-search-cache` du cache dans `sw.js` pour renouveler les fichiers hors connexion.
+Modifier les fichiers du dépôt puis publier sur la même branche. Après un changement des ressources mises en cache, augmenter la version du cache dans `sw.js` pour renouveler les fichiers hors connexion. Cette version utilise `v4-flexible-sessions`.
 
 ## Nutrition
 
@@ -52,6 +52,21 @@ Les interfaces de recherche restent séparées et les fiches gardent leur origin
 3. Enregistrer directement sur la branche main et attendre la fin du déploiement Pages.
 4. Ouvrir le site, recharger, puis le fermer et le rouvrir si l’ancienne version était encore ouverte. Le cache hors connexion porte une nouvelle version pour remplacer les anciens fichiers.
 5. Le nouvel onglet Nutrition apparaît. Les données locales restent sous la clé `repere.v1`.
+
+## Mise à jour vers les séances personnalisables
+
+- La clé de stockage reste `repere.v1` : remplacer les fichiers du site ne supprime pas les données du navigateur.
+- Au premier chargement, une sauvegarde de format 1 est convertie automatiquement au format 2. Le programme, l’historique, la séance en cours, le poids et la nutrition sont conservés.
+- Avant d’écrire la migration, l’application garde le JSON original dans une clé locale préfixée par `repere.v1.backup.`. Une importation conserve également une copie des données remplacées.
+- Si la lecture ou la migration échoue, l’application n’écrit ni programme par défaut ni données vides sur `repere.v1` et propose de télécharger les données originales.
+- Les exports de l’ancienne version restent importables. Les nouveaux exports contiennent les identifiants stables des séances et mouvements ainsi que l’instantané complet de la séance en cours.
+- Le catalogue d’exercices est embarqué dans `exercise-catalog.js` et fait partie du cache hors connexion.
+
+Avant toute publication, exporter tout de même une sauvegarde JSON depuis **Programme > Exporter la sauvegarde** dans la version actuellement en ligne.
+
+### Vérifications locales
+
+Exécuter `node tests/core.test.js` pour vérifier la migration d’une sauvegarde ancienne contenant un programme personnalisé, de l’historique, une séance en cours, une pesée et de la nutrition.
 
 ## Recherches de marques et connexion
 
